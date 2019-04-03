@@ -15,7 +15,7 @@ optional arguments:
 ```
  Example -
  <br>
- ```python 
+```
  python webCrawler.py --level 4 www.example.com E:/dump
 ```
 In this example, script will download files from www.example.com by recursively visiting 4 pages and will dump downloaded files to E:/dump path.
