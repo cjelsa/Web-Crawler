@@ -1,6 +1,8 @@
 # Web-Crawler
 This script will help you to crawl through websites recursively and download files as per your requirement(pdf, docx, ppt, etc.)
 -
+![WebCrawler](../assets/web.jpg?raw=true)
+<br>
 Usage: ```python
 webCrawler.py [-h] [--level LEVEL] url path```
 
