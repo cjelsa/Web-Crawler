@@ -8,7 +8,10 @@ This script will help you to crawl through websites recursively and download fil
 </p>
 <br/>
 
-## Usage:  ``` python webCrawler.py [-h] [--level LEVEL] url path ```
+## Usage:  
+```
+python webCrawler.py [-h] [--level LEVEL] url path
+```
 ```
 positional arguments:
   url            URL from which you want to download files
@@ -19,12 +22,12 @@ optional arguments:
   --level LEVEL  Level of recursively visiting pages from a link, default is 3
 ```
 
- # Example -
+## Example -
  <br/>
 ```
  python webCrawler.py --level 4 www.mywebsite.com E:/dump
 ```
 In this example, script will download files from www.mywebsite.com by recursively visiting 4 pages and will dump downloaded files to E:/dump path.
 
-# Development status -
+## Development status -
 This project is under development and soon will be completed.
