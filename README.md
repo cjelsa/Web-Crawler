@@ -10,7 +10,7 @@ This script will help you to crawl through websites recursively and download fil
 
 ## Usage -  
 ```
-python webCrawler.py [-h] [--level LEVEL] url path
+python webCrawler.py [-h] [--level LEVEL] [--filetypes FILETYPES] url path
 ```
 ```
 positional arguments:
@@ -20,13 +20,15 @@ positional arguments:
 optional arguments:
   -h, --help     show this help message and exit
   --level LEVEL  Level of recursively visiting pages from a link, default is 3
+  --filetypes FILETYPES		Specify comma seperated filetypes such as pdf,txt to
+                        be downloaded, default is pdf
 ```
 
 ## Example -
 ```
- python webCrawler.py --level 4 www.mywebsite.com E:/dump
+ python webCrawler.py --level 4 --filetypes pdfg,txt,xls www.mywebsite.com E:/dump
 ```
-In this example, script will download files from www.mywebsite.com by recursively visiting 4 pages and will dump downloaded files to E:/dump path.
+In this example, script will download all pdfs,txt files from www.mywebsite.com by recursively visiting 4 pages and will dump downloaded files to E:/dump path.
 
 ## Development status -
 This project is under development and soon will be completed.
