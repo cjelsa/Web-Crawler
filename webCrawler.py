@@ -1,13 +1,16 @@
 import sys
 import os
 import argparse
+import traceback
+import time
+import random
 
 to_be_visited = []
 visited_links = {}
 downloaded_links = []
 
 
-def fetch_n_crawl_urls(url, path, level, filetypes):
+def fetch_n_crawl_urls(url, path, max_level, file_types):
     if not os.path.exists(path):
         os.makedirs(path)
     site_name = url.split('//')[1].replace('/', '', 3)
@@ -20,26 +23,45 @@ def fetch_n_crawl_urls(url, path, level, filetypes):
     if not os.path.exists(dump_path):
         os.makedirs(dump_path)
     visited_links[url] = False
-    crawler(url, url, dump_path, 1)
+    crawler(url, url, dump_path, file_types, 1, max_level)
 
 
-def crawler(main_url, local_url, path, level):
+def crawler(main_url, local_url, path, file_types, current_level, max_level):
+    """
+    Crawler method is used to crawl through given URL
+    up to given level and download specified files
+    :param main_url: base URL of website
+    :param local_url: URL to be crawled
+    :param path: dumping location for downloaded files
+    :param file_types: types of files to be downloaded
+    :param current_level: current level of web page visit
+    :param max_level: level of depth to visit links
+    """
     print('crawler called')
+    try:
+        if not visited_links[local_url]:
+            print('not visited -' + local_url)
+            if current_level > max_level:
+                print('don"t cross your level-', current_level, ', returning')
+                return
+            visited_links[local_url] = True
+            time.sleep(random.randint(1, 5))  # sleep call so as not to overload the server
+            print('visiting--', local_url)
+            print('level--', current_level)
+    except Exception as e:
+        print('Exception in Crawler-', traceback.format_exc())
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('url', help='URL from which you want to download files')
+    parser.add_argument('website_url', help='URL from which you want to download files')
     parser.add_argument('path', help='Path to which you want to dump downloaded files')
     parser.add_argument('--level', help='Level of recursively visiting pages from a link, default = 3', type=int, default=3)
-    parser.add_argument('--filetypes', help='Specify comma seperated filetypes such as pdf,txt to be downloaded, default is pdf', default='pdf')
+    parser.add_argument('--file_types', help='Specify comma seperated filetypes such as pdf,txt to be downloaded, default is pdf', default='pdf')
     args = parser.parse_args()
 
-    print('url-', args.url)
+    print('url-', args.website_url)
     print('path-', args.path)
     print('level-', args.level)
-    print('filetypes-', args.filetypes)
-
-
-
-    fetch_n_crawl_urls(args.url, args.path, args.level, args.filetypes)
+    print('filetypes-', args.file_types)
+    fetch_n_crawl_urls(args.website_url, args.path, args.level, args.file_types)
