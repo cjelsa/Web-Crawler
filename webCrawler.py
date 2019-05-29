@@ -4,6 +4,8 @@ import argparse
 import traceback
 import time
 import random
+from urllib import request
+from bs4 import BeautifulSoup
 
 to_be_visited = []
 visited_links = {}
@@ -48,6 +50,18 @@ def crawler(main_url, local_url, path, file_types, current_level, max_level):
             time.sleep(random.randint(1, 5))  # sleep call so as not to overload the server
             print('visiting--', local_url)
             print('level--', current_level)
+            html = request.urlopen(local_url)
+            if html.status == 200:
+                soup = BeautifulSoup(html, "lxml")
+                print('getting links')
+                links = soup.find_all('a', recursive=True)
+                fetched_links = 0
+                for l in links:
+                    n_url = l.get('href')
+                    print('current', n_url)
+                    fetched_links += 1
+                print("total href's fetched - ", fetched_links)
+
     except Exception as e:
         print('Exception in Crawler-', traceback.format_exc())
 
