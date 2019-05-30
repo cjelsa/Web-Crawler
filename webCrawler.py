@@ -6,6 +6,7 @@ import time
 import random
 from urllib import request
 from bs4 import BeautifulSoup
+import shutil
 
 to_be_visited = []
 visited_links = {}
@@ -40,6 +41,7 @@ def crawler(main_url, local_url, path, file_types, current_level, max_level):
     :param max_level: level of depth to visit links
     """
     print('crawler called')
+    file_type_list = file_types.split(',')
     try:
         if not visited_links[local_url]:
             print('not visited -' + local_url)
@@ -58,9 +60,21 @@ def crawler(main_url, local_url, path, file_types, current_level, max_level):
                 fetched_links = 0
                 for l in links:
                     n_url = l.get('href')
-                    print('current', n_url)
-                    fetched_links += 1
-                print("total href's fetched - ", fetched_links)
+                    if n_url is not None:
+                        for file_ext in file_type_list:
+                            if n_url.endswith(file_ext):
+                                print('lets download--', n_url)
+                                if main_url.startswith('https'):
+                                    if n_url not in downloaded_links:
+                                        time.sleep(random.randint(1, 4))   # waiting before accessing URL
+                                        res = request.urlopen(main_url + '/' + n_url)
+                                        downloaded_links.append(n_url)
+                                        print(n_url.split('/')[-1], 'status-', res.status, 'downloading level-', current_level)
+                                        with open(path + '/' + n_url.split('/')[-1], 'wb') as f:
+                                            shutil.copyfileobj(res, f)
+                                fetched_links += 1
+
+                print("Total files downloaded - ", fetched_links)
 
     except Exception as e:
         print('Exception in Crawler-', traceback.format_exc())
