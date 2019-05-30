@@ -14,19 +14,21 @@ downloaded_links = []
 
 
 def fetch_n_crawl_urls(url, path, max_level, file_types):
+    print(url.split("//")[1])
     if not os.path.exists(path):
         os.makedirs(path)
-    site_name = url.split('//')[1].replace('/', '', 3)
-    if site_name.startswith('www.'):
-        site_name = site_name.replace('www.', '')
+    if url.startswith("http"):
+        site_name = url.split('//')[1].replace('www.', '')
+    # if site_name.startswith('www.'):
+    #     site_name = site_name.replace('www.', '')
     print('---------------------------------------------------------------------')
     print(site_name)
     print('---------------------------------------------------------------------')
-    dump_path = path+'/'+site_name
-    if not os.path.exists(dump_path):
-        os.makedirs(dump_path)
-    visited_links[url] = False
-    crawler(url, url, dump_path, file_types, 1, max_level)
+    # dump_path = path+'/'+site_name
+    # if not os.path.exists(dump_path):
+    #     os.makedirs(dump_path)
+    # visited_links[url] = False
+    # crawler(url, url, dump_path, file_types, 1, max_level)
 
 
 def crawler(main_url, local_url, path, file_types, current_level, max_level):
