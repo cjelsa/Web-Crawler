@@ -24,11 +24,11 @@ def fetch_n_crawl_urls(url, path, max_level, file_types):
     print('---------------------------------------------------------------------')
     print(site_name)
     print('---------------------------------------------------------------------')
-    # dump_path = path+'/'+site_name
-    # if not os.path.exists(dump_path):
-    #     os.makedirs(dump_path)
-    # visited_links[url] = False
-    # crawler(url, url, dump_path, file_types, 1, max_level)
+    dump_path = path+'/'+site_name
+    if not os.path.exists(dump_path):
+        os.makedirs(dump_path)
+    visited_links[url] = False
+    crawler(url, url, dump_path, file_types, 1, max_level)
 
 
 def crawler(main_url, local_url, path, file_types, current_level, max_level):
@@ -66,15 +66,17 @@ def crawler(main_url, local_url, path, file_types, current_level, max_level):
                         for file_ext in file_type_list:
                             if n_url.endswith(file_ext):
                                 print('lets download--', n_url)
-                                if main_url.startswith('https'):
+                                if main_url.startswith('https') or main_url.startswith('http'):
                                     if n_url not in downloaded_links:
                                         time.sleep(random.randint(1, 4))   # waiting before accessing URL
                                         res = request.urlopen(main_url + '/' + n_url)
                                         downloaded_links.append(n_url)
+                                        visited_links[n_url] = True
                                         print(n_url.split('/')[-1], 'status-', res.status, 'downloading level-', current_level)
                                         with open(path + '/' + n_url.split('/')[-1], 'wb') as f:
                                             shutil.copyfileobj(res, f)
                                 fetched_links += 1
+                        crawler(main_url, local_url, path, current_level + 1, max_level)
 
                 print("Total files downloaded - ", fetched_links)
 
