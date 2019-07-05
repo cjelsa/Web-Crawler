@@ -4,8 +4,8 @@ This script will help you to crawl through websites recursively and download fil
 <br/>
 
 <p align="center">
-  <img src="../assets/jack.jpg?raw=true"></img>
-  <p>Jack searching for some files ...</p>
+  <img src="../assets/jack.jpg?raw=true"/>
+  <p align="center">Jack searching for some files ...</p>
 </p>
 <br/>
 
