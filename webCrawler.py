@@ -1,3 +1,9 @@
+# Author's note -
+# This script belongs to/developed by Mithilesh Tipkari (https://github.com/mithileshtipkari)
+# It is free to use and contribute and share but author name should be mentioned while sharing the script.
+__author__ = 'Mithilesh Tipkari'
+__version__ = '1.0'
+
 import os
 import argparse
 import traceback
